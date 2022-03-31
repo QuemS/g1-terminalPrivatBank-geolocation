@@ -30,7 +30,7 @@ let module = {
                 
             }
             let img = document.querySelector('.imgMap');
-            img.classList.add('text-center')
+            img.classList.add('text-center');
             img.innerHTML = `
             <img src="https://image.maps.api.here.com/mia/1.6/mapview?app_id=oZmMWRV4tAjQmgkxBvF0&app_code=x5pKHqifhw1mnS_zBTIFsA&z=15&w=600&h=600&c=${this.data.devices[0].longitude},${this.data.devices[0].latitude}" alt="">
             `;
@@ -67,6 +67,7 @@ let module = {
 }
 /******************************************/
 
+
 navigator.geolocation.getCurrentPosition(position =>{
     let latitude = position.coords.latitude;
     let longitude = position.coords.longitude;
@@ -76,15 +77,23 @@ navigator.geolocation.getCurrentPosition(position =>{
     
     
 },error=>{
-    console.log('Geolocation error', error);
+    console.log(error);
+    if (error.message == "User denied Geolocation") {
+        let tag = document.querySelector('.imgMap');
+        let tag2 = document.querySelector('.table');
+        tag2.innerHTML = `<h1 class="text-center text-danger">Вы запретили доступ к геолокации.</h1>`
+        tag.innerHTML = `<h1 class="text-center text-danger">Вы запретили доступ к геолокации.</h1>`
+    }
+    
 })
 
 
-terminal.addEventListener('click',function(){
-    openPage('Home', this, 'LightSalmon');
-  });
+
 defaultOpen.addEventListener('click',function(){
     openPage('News', this, 'green');
+  });
+terminal.addEventListener('click',function(){
+    openPage('Home', this, 'LightSalmon');
   });
 document.getElementById("defaultOpen").click();
 
